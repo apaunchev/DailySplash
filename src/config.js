@@ -1,5 +1,4 @@
 const APP_ID = '1997df71664984f20c0b1b8fcd42d1279fb98c424e07e0e1385299eed6935142'
-const APP_SECRET = 'd59b45ebca498fa381846a907273db2f19d3f0cf5aec3560b9a31dcb3d9a2315'
-const CALLBACK_URL = 'urn:ietf:wg:oauth:2.0:oob'
+const RANDOM_PHOTO_ENDPOINT = `https://api.unsplash.com/photos/random?client_id=${APP_ID}`
 
-export { APP_ID, APP_SECRET, CALLBACK_URL }
+export { RANDOM_PHOTO_ENDPOINT }

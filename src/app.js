@@ -1,47 +1,62 @@
-import { $, $$ } from './utils'
-import { APP_ID, APP_SECRET, CALLBACK_URL } from './config'
-import Unsplash, { toJson } from 'unsplash-js'
+import { $, fetchJson, fetchImageData } from './utils'
+import { RANDOM_PHOTO_ENDPOINT } from './config'
+
+const localStorage = window.localStorage
 
 const el = {
   body: $('body'),
-  header: $('header'),
+  main: $('main'),
   btnMore: $('.btn-more'),
   linkDownload: $('.link-download'),
-  linkView: $('.link-view'),
-  main: $('main')
+  linkView: $('.link-view')
 }
 
-el.btnMore.addEventListener('click', showMoreMenu)
+const init = () => {
+  bindEvents()
 
-const unsplash = new Unsplash({
-  applicationId: APP_ID,
-  secret: APP_SECRET,
-  callbackUrl: CALLBACK_URL
-})
-
-unsplash.photos.getRandomPhoto({
-  featured: true
-})
-  .then(toJson)
-  .then(json => {
-    const { color, links, urls } = json
-
-    el.main.style.backgroundColor = color
-    el.main.style.backgroundImage = `url(${urls.full})`
-    el.linkDownload.href = links.download
-    el.linkView.href = links.html
-  })
-  .catch(err => {
-    console.error(err)
-    fillWithDummyData()
-  })
-
-function fillWithDummyData () {
-  el.main.style.backgroundImage = `url(placeholder.png)`
-  el.linkDownload.href = `placeholder.png`
-  el.linkView.href = `https://unsplash.com`
+  if (localStorage.getItem('nextPhoto')) {
+    fillWithData(JSON.parse(localStorage.getItem('nextPhoto')))
+    fetchNextPhoto()
+  } else {
+    fetchNextPhoto(true)
+  }
 }
 
-function showMoreMenu () {
-  $('.popover').classList.toggle('is-visible')
+const bindEvents = () => {
+  el.btnMore.addEventListener('click', showMoreMenu)
 }
+
+const showMoreMenu = () => $('.popover').classList.toggle('is-visible')
+
+const fetchNextPhoto = (fill = false) => {
+  fetchJson(RANDOM_PHOTO_ENDPOINT)
+    .then(photo => {
+      fetchImageData(photo.urls.regular)
+        .then(imageData => {
+          const nextPhoto = {
+            photoId: photo.id,
+            color: photo.color,
+            htmlPath: photo.links.html,
+            downloadPath: photo.links.download,
+            imageData
+          }
+
+          localStorage.setItem('nextPhoto', JSON.stringify(nextPhoto))
+
+          if (fill) {
+            fillWithData(nextPhoto)
+          }
+        })
+        .catch(error => console.error(error))
+    })
+    .catch(error => console.error(error))
+}
+
+const fillWithData = (photo) => {
+  el.main.style.backgroundColor = `${photo.color}`
+  el.main.style.backgroundImage = `url(${photo.imageData})`
+  el.linkDownload.href = `${photo.downloadPath}`
+  el.linkView.href = `${photo.htmlPath}`
+}
+
+init()
