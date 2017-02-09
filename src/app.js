@@ -23,10 +23,12 @@ const init = () => {
 }
 
 const bindEvents = () => {
-  el.btnMore.addEventListener('click', showMoreMenu)
+  el.btnMore.addEventListener('click', toggleMoreMenu)
+  el.main.addEventListener('click', hideMoreMenu)
 }
 
-const showMoreMenu = () => $('.popover').classList.toggle('is-visible')
+const toggleMoreMenu = () => $('.popover').classList.toggle('is-visible')
+const hideMoreMenu = () => $('.popover').classList.remove('is-visible')
 
 const fetchNextPhoto = (fill = false) => {
   fetchJson(RANDOM_PHOTO_ENDPOINT)
