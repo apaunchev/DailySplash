@@ -4,7 +4,7 @@ import { APP_ID } from './config'
 const localStorage = window.localStorage
 
 const el = {
-  body: $('body'),
+  html: $('html'),
   main: $('main'),
   btnMore: $('.btn-more'),
   linkDownload: $('.link-download'),
@@ -55,7 +55,7 @@ const fetchNextPhoto = (fill = false) => {
 }
 
 const fillWithData = (photo) => {
-  el.main.style.backgroundColor = `${photo.color}`
+  el.html.style.backgroundColor = `${photo.color}`
   el.main.style.backgroundImage = `url(${photo.imageData})`
   el.linkDownload.href = `${photo.downloadPath}`
   el.linkView.href = `${photo.htmlPath}`
