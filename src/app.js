@@ -1,5 +1,5 @@
 import { $, fetchJson, fetchImageData } from './utils'
-import { RANDOM_PHOTO_ENDPOINT } from './config'
+import { APP_ID } from './config'
 
 const localStorage = window.localStorage
 
@@ -31,9 +31,9 @@ const toggleMoreMenu = () => $('.popover').classList.toggle('is-visible')
 const hideMoreMenu = () => $('.popover').classList.remove('is-visible')
 
 const fetchNextPhoto = (fill = false) => {
-  fetchJson(RANDOM_PHOTO_ENDPOINT)
+  fetchJson(`https://api.unsplash.com/photos/random?featured=true&orientation=landscape&w=${window.innerWidth}&client_id=${APP_ID}`)
     .then(photo => {
-      fetchImageData(photo.urls.regular)
+      fetchImageData(photo.urls.custom)
         .then(imageData => {
           const nextPhoto = {
             photoId: photo.id,
