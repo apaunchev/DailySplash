@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "build": "webpack --progress --watch",
-    "server": "browser-sync start --server --files 'public/*.css, public/*.html, public/*.js'"
+    "server": "browser-sync start --server 'public/' --files 'public/*.css, public/*.html, public/*.js'"
   },
   "dependencies": {
     "unsplash-js": "^4.5.0"
