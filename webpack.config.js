@@ -7,7 +7,7 @@ module.exports = {
     filename: './src/app.js'
   },
   output: {
-    filename: './public/app.js'
+    filename: './public/js/app.js'
   },
   module: {
     loaders: [
