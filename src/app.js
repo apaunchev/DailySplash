@@ -2,6 +2,7 @@ import { $, fetchJson, fetchImageData } from './utils'
 import { APP_ID } from './config'
 
 const localStorage = window.localStorage
+const nextPhoto = localStorage.getItem('nextPhoto')
 
 const el = {
   html: $('html'),
@@ -14,8 +15,8 @@ const el = {
 const init = () => {
   bindEvents()
 
-  if (localStorage.getItem('nextPhoto')) {
-    fillWithData(JSON.parse(localStorage.getItem('nextPhoto')))
+  if (nextPhoto) {
+    fillWithData(JSON.parse(nextPhoto))
     fetchNextPhoto()
   } else {
     fetchNextPhoto(true)
@@ -33,8 +34,16 @@ const hideMoreMenu = () => $('.popover').classList.remove('is-visible')
 const fetchNextPhoto = (fill = false) => {
   fetchJson(`https://api.unsplash.com/photos/random?featured=true&orientation=landscape&w=${window.innerWidth}&client_id=${APP_ID}`)
     .then(photo => {
+      if (!photo) {
+        return
+      }
+
       fetchImageData(photo.urls.custom)
         .then(imageData => {
+          if (!imageData) {
+            return
+          }
+
           const nextPhoto = {
             photoId: photo.id,
             color: photo.color,
