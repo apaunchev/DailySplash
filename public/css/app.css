@@ -2,24 +2,54 @@
   box-sizing: border-box;
 }
 
-body {
-  width: 100vw;
-  height: 100vh;
-  font-family: sans-serif;
+html {
+  font-family: "Courier Next", Courier, monospace;
+  font-size: 15px;
+  line-height: 1.6;
 }
 
-header {
-  padding: 15px 20px;
+body,
+.container,
+.overlay {
+  width: 100vw;
+  height: 100vh;
+}
+
+.container {
+  background-position: center;
+  background-size: cover;
+}
+
+.overlay {
+  z-index: 1;
+  background: transparent;
+  background: linear-gradient(180deg, rgba(0,0,0,.25) 0, transparent 20%, transparent 60%, rgba(0,0,0,.3));
+}
+
+header,
+footer {
   position: absolute;
-  top: 0;
   right: 0;
   left: 0;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+  padding: 15px 20px;
+}
+
+header {
+  top: 0;
+}
+
+footer {
+  bottom: 0;
+}
+
+.ui-left {
+  display: flex;
+  flex: 1;
 }
 
 .popover {
+  z-index: 10;
   position: absolute;
   top: 4rem;
   right: 20px;
@@ -29,6 +59,9 @@ header {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  transition: all .25s cubic-bezier(.24, .22, .015, 1.56), opacity .1s ease-in-out;
+  transform: scale(.85) translateY(-10%);
 }
 
 .popover:before {
@@ -47,7 +80,7 @@ header {
   pointer-events: auto;
   opacity: 1;
   visibility: visible;
-  transform: scale3d(1, 1, 1);
+  transform: scale(1) translate(0);
 }
 
 .popover ul {
@@ -64,48 +97,67 @@ header {
   margin-bottom: 0;
 }
 
-.popover a {
-  color: white;
-  display: block;
-}
-
-.popover a:hover {
-  color: #999;
-}
-
-main {
-  width: 100vw;
-  height: 100vh;
-  background-position: center;
-  background-size: cover;
-}
-
 .btn {
   color: #777;
   background-color: rgba(255, 255, 255, .8);
   display: inline-block;
-  height: 32px;
-  margin-left: 5px;
   padding: 0 10px;
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: .04em;
   line-height: 32px;
   cursor: pointer;
   border: 1px solid transparent;
   border-radius: 5px;
   text-decoration: none;
   box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.btn:hover {
-  color: #777;
-  background-color: #fff;
+.user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.user-link-primary,
+.user-link-secondary {
+  display: block;
+  line-height: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-link-secondary {
+  padding-top: 4px;
+  font-size: 11px;
+}
+
+.user-image {
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
+  border-radius: 50%;
 }
 
 a {
-  -webkit-transition: all .2s ease-in-out;
+  color: white;
+  text-decoration: none;
+  text-shadow: 0 1px rgba(0, 0, 0, .04);
+  opacity: .8;
   transition: all .2s ease-in-out;
+}
+
+a:hover,
+a:active,
+a:focus {
+  opacity: 1;
+}
+
+img {
+  vertical-align: middle;
 }
 
 @keyframes fade-in {
