@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-html {
+body {
   font-family: "Courier Next", Courier, monospace;
   font-size: 15px;
   line-height: 1.6;
@@ -41,6 +41,11 @@ header {
 
 footer {
   bottom: 0;
+}
+
+.ui-left,
+.ui-right {
+  height: 32px;
 }
 
 .ui-left {
@@ -98,17 +103,17 @@ footer {
 }
 
 .btn {
-  color: #777;
-  background-color: rgba(255, 255, 255, .8);
+  color: #999;
+  background-color: white;
   display: inline-block;
-  padding: 0 10px;
+  height: 32px;
+  padding: 0 12px;
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: .04em;
   line-height: 32px;
   cursor: pointer;
-  border: 1px solid transparent;
   border-radius: 5px;
   text-decoration: none;
   box-shadow: 0 1px 1px rgba(0, 0, 0, .04);

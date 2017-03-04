@@ -1,6 +1,6 @@
 {
   "name": "Daily Splash",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "manifest_version": 2,
   "chrome_url_overrides": {
     "newtab": "index.html"
