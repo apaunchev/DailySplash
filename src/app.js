@@ -23,7 +23,7 @@ const init = () => {
   if (nextPhoto) {
     fillWithData(JSON.parse(nextPhoto))
 
-    if (expireDate && expireDate <= now.getTime()) {
+    if (!expireDate || expireDate <= now.getTime()) {
       fetchNextPhoto()
     }
   } else {
