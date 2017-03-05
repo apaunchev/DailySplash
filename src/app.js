@@ -57,7 +57,6 @@ const fetchNextPhoto = (fill = false) => {
           }
 
           const nextPhoto = {
-            color: photo.color,
             htmlPath: photo.links.html,
             downloadPath: photo.links.download,
             location: photo.location ? photo.location.name : null,
@@ -82,7 +81,6 @@ const fetchNextPhoto = (fill = false) => {
 }
 
 const fillWithData = (photo) => {
-  el.body.style.backgroundColor = `${photo.color}`
   el.app.style.backgroundImage = `url(${photo.imageData})`
 
   el.btnDownload.href = `${photo.downloadPath}`
