@@ -3,44 +3,35 @@
 }
 
 body {
+  background-color: #111;
   font-family: "Courier Next", Courier, monospace;
   font-size: 15px;
   line-height: 1.6;
 }
 
 body,
-.container,
+.app,
 .overlay {
   width: 100vw;
   height: 100vh;
 }
 
-.container {
+.app {
   background-position: center;
   background-size: cover;
 }
 
 .overlay {
-  z-index: 1;
-  background: transparent;
-  background: linear-gradient(180deg, rgba(0,0,0,.25) 0, transparent 20%, transparent 60%, rgba(0,0,0,.3));
+  background-image: linear-gradient(180deg, transparent 80%, rgba(0, 0, 0, .3));
 }
 
-header,
-footer {
+.ui {
   position: absolute;
   right: 0;
+  bottom: 0;
   left: 0;
   display: flex;
   padding: 15px 20px;
-}
-
-header {
-  top: 0;
-}
-
-footer {
-  bottom: 0;
 }
 
 .ui-left,
@@ -56,7 +47,7 @@ footer {
 .popover {
   z-index: 10;
   position: absolute;
-  top: 4rem;
+  bottom: 60px;
   right: 20px;
   border-radius: 5px;
   background-color: rgba(0, 0, 0, .8);
@@ -69,16 +60,16 @@ footer {
   transform: scale(.85) translateY(-10%);
 }
 
-.popover:before {
+.popover:after {
   content: "";
   position: absolute;
-  bottom: 100%;
-  left: 85%;
+  top: 100%;
+  right: 12px;
   width: 0;
   height: 0;
   border: 6px solid transparent;
-  border-top-width: 0;
-  border-bottom-color: rgba(0, 0, 0, .8);
+  border-bottom-width: 0;
+  border-top-color: rgba(0, 0, 0, .8);
 }
 
 .popover.is-visible {
@@ -103,7 +94,7 @@ footer {
 }
 
 .btn {
-  color: #999;
+  color: #666;
   background-color: white;
   display: inline-block;
   height: 32px;
@@ -111,7 +102,6 @@ footer {
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: .04em;
   line-height: 32px;
   cursor: pointer;
   border-radius: 5px;
@@ -128,7 +118,7 @@ footer {
 
 .user-link-primary,
 .user-link-secondary {
-  display: block;
+  display: inline-block;
   line-height: 1;
   overflow: hidden;
   text-overflow: ellipsis;

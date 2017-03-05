@@ -7,11 +7,10 @@ const expireDate = localStorage.getItem('ds_expireDate')
 const now = new Date()
 
 const el = {
-  body: $('body'),
-  container: $('.container'),
-  btnMore: $('.btn-more'),
-  btnDownload: $('.btn-download'),
-  linkView: $('.link-view'),
+  app: $('.app'),
+  btnMore: $('.js-btn-more'),
+  btnDownload: $('.js-btn-download'),
+  linkView: $('.js-link-view'),
   userImage: $('.js-user-image'),
   userImageLink: $('.js-user-image-link'),
   userLink: $('.js-user-link'),
@@ -34,7 +33,7 @@ const init = () => {
 
 const bindEvents = () => {
   el.btnMore.addEventListener('click', toggleMoreMenu)
-  el.body.addEventListener('click', hideMoreMenu)
+  el.app.addEventListener('click', hideMoreMenu)
 }
 
 const toggleMoreMenu = (ev) => {
@@ -84,7 +83,7 @@ const fetchNextPhoto = (fill = false) => {
 
 const fillWithData = (photo) => {
   el.body.style.backgroundColor = `${photo.color}`
-  el.container.style.backgroundImage = `url(${photo.imageData})`
+  el.app.style.backgroundImage = `url(${photo.imageData})`
 
   el.btnDownload.href = `${photo.downloadPath}`
   el.linkView.href = `${photo.htmlPath}`
