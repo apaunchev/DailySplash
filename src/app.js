@@ -8,6 +8,7 @@ const now = new Date()
 
 const el = {
   app: $('.app'),
+  popover: $('.js-popover'),
   btnMore: $('.js-btn-more'),
   btnDownload: $('.js-btn-download'),
   linkView: $('.js-link-view'),
@@ -32,16 +33,17 @@ const init = () => {
 }
 
 const bindEvents = () => {
-  el.btnMore.addEventListener('click', toggleMoreMenu)
-  el.app.addEventListener('click', hideMoreMenu)
+  el.btnMore.addEventListener('click', togglePopover)
+  el.popover.addEventListener('click', (ev) => ev.stopPropagation())
+  el.app.addEventListener('click', hidePopover)
 }
 
-const toggleMoreMenu = (ev) => {
+const togglePopover = (ev) => {
   ev.stopPropagation()
-  $('.popover').classList.toggle('is-visible')
+  el.popover.classList.toggle('is-visible')
 }
 
-const hideMoreMenu = () => $('.popover').classList.remove('is-visible')
+const hidePopover = (ev) => el.popover.classList.remove('is-visible')
 
 const fetchNextPhoto = (fill = false) => {
   console.time('[daily-splash] fetching new photo')
