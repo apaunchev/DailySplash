@@ -1,10 +1,8 @@
 import { $, fetchJson, fetchImageData } from './utils'
-import { API_ENDPOINT, APP_ID, EXPIRE_INTERVAL } from './config'
+import { API_ENDPOINT, APP_ID } from './config'
 
 const localStorage = window.localStorage
 const nextPhoto = localStorage.getItem('ds_nextPhoto')
-const expireDate = localStorage.getItem('ds_expireDate')
-const now = new Date()
 
 const el = {
   app: $('.app'),
@@ -24,12 +22,8 @@ const init = () => {
 
   if (nextPhoto) {
     fillWithData(JSON.parse(nextPhoto))
-
-    if (!expireDate || expireDate <= now.getTime()) {
-      fetchNextPhoto()
-    }
   } else {
-    fetchNextPhoto(true)
+    fetchNextPhoto()
   }
 }
 
@@ -47,7 +41,9 @@ const togglePopover = (ev) => {
 
 const hidePopover = (ev) => el.popover.classList.remove('is-visible')
 
-const fetchNextPhoto = (fill = false) => {
+const fetchNextPhoto = () => {
+  el.linkShuffle.textContent = `Shuffling...`
+
   fetchJson(`${API_ENDPOINT}/photos/random?collections=317099&orientation=landscape&w=${window.innerWidth}&h=${window.innerHeight}&client_id=${APP_ID}`)
     .then(photo => {
       if (!photo) {
@@ -73,11 +69,8 @@ const fetchNextPhoto = (fill = false) => {
           }
 
           localStorage.setItem('ds_nextPhoto', JSON.stringify(nextPhoto))
-          localStorage.setItem('ds_expireDate', now.getTime() + EXPIRE_INTERVAL)
 
-          if (fill) {
-            fillWithData(nextPhoto)
-          }
+          fillWithData(nextPhoto)
         })
         .catch(error => console.error(error))
     })
@@ -86,6 +79,8 @@ const fetchNextPhoto = (fill = false) => {
 
 const fillWithData = (photo) => {
   el.app.style.backgroundImage = `url(${photo.imageData})`
+
+  el.linkShuffle.textContent = `Shuffle`
 
   el.linkDownload.href = `${photo.downloadPath}`
   el.linkView.href = `${photo.htmlPath}`
@@ -100,7 +95,8 @@ const fillWithData = (photo) => {
     el.locationLink.textContent = `${photo.location}`
     el.locationLink.href = `https://unsplash.com/search/${photo.location}`
   } else {
-    el.locationLink.remove()
+    el.locationLink.textContent = ``
+    el.locationLink.href = ``
   }
 }
 
