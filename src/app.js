@@ -9,8 +9,9 @@ const now = new Date()
 const el = {
   app: $('.app'),
   popover: $('.js-popover'),
-  btnMore: $('.js-btn-more'),
-  btnDownload: $('.js-btn-download'),
+  linkMore: $('.js-link-more'),
+  linkDownload: $('.js-link-download'),
+  linkShuffle: $('.js-link-shuffle'),
   linkView: $('.js-link-view'),
   userImage: $('.js-user-image'),
   userImageLink: $('.js-user-image-link'),
@@ -33,7 +34,8 @@ const init = () => {
 }
 
 const bindEvents = () => {
-  el.btnMore.addEventListener('click', togglePopover)
+  el.linkMore.addEventListener('click', togglePopover)
+  el.linkShuffle.addEventListener('click', fetchNextPhoto)
   el.popover.addEventListener('click', (ev) => ev.stopPropagation())
   el.app.addEventListener('click', hidePopover)
 }
@@ -46,15 +48,11 @@ const togglePopover = (ev) => {
 const hidePopover = (ev) => el.popover.classList.remove('is-visible')
 
 const fetchNextPhoto = (fill = false) => {
-  console.time('[daily-splash] fetching new photo')
-
   fetchJson(`${API_ENDPOINT}/photos/random?collections=317099&orientation=landscape&w=${window.innerWidth}&h=${window.innerHeight}&client_id=${APP_ID}`)
     .then(photo => {
       if (!photo) {
         return
       }
-
-      console.timeEnd('[daily-splash] fetching new photo')
 
       fetchImageData(photo.urls.custom)
         .then(imageData => {
@@ -89,7 +87,7 @@ const fetchNextPhoto = (fill = false) => {
 const fillWithData = (photo) => {
   el.app.style.backgroundImage = `url(${photo.imageData})`
 
-  el.btnDownload.href = `${photo.downloadPath}`
+  el.linkDownload.href = `${photo.downloadPath}`
   el.linkView.href = `${photo.htmlPath}`
 
   el.userImage.src = `${photo.user.image}`
