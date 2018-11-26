@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import NProgress from "nprogress";
+import Octicon, { Sync, DesktopDownload } from "@githubprimer/octicons-react";
 
 import { ENDPOINTS, LOCAL_STORAGE_KEYS, COLLECTIONS } from "./consts";
 import { fetchJSONData, fetchImageData } from "./utils";
@@ -103,15 +104,15 @@ const App = () => {
         <div>
           <div className="BtnGroup">
             <button
-              className="btn BtnGroup-item"
+              className="btn btn-sm BtnGroup-item"
               onClick={async () => await getPhoto()}
               disabled={loading}
             >
-              Refresh
+              <Octicon icon={Sync} width={14} height={14} /> Refresh
             </button>
             {photo.links && (
-              <a className="btn BtnGroup-item" href={photo.links.download}>
-                Download
+              <a className="btn btn-sm BtnGroup-item" href={photo.links.download}>
+                <Octicon icon={DesktopDownload} width={14} height={14} /> Download
               </a>
             )}
           </div>
