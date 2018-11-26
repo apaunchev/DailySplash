@@ -1,6 +1,6 @@
 {
   "name": "daily-splash",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "private": true,
   "dependencies": {
     "@githubprimer/octicons-react": "^8.1.3",
