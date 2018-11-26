@@ -7,43 +7,40 @@ import "../node_modules/primer/build/build.css";
 import "../node_modules/nprogress/nprogress.css";
 import "./App.css";
 
-const ENDPOINTS = {
-  RANDOM: "https://api.unsplash.com/photos/random?",
-  SEARCH: "https://unsplash.com/search"
-};
-const LOCAL_STORAGE_KEY = {
-  NEXT_PHOTO: "ds_nextPhoto",
-  COLLECTIONS: "ds_collections"
-};
-const collections = () => {
-  try {
-    return window.localStorage.getItem(LOCAL_STORAGE_KEY.COLLECTIONS);
-  } catch (e) {
-    // default to Unsplash Editorial collection (https://unsplash.com/collections/317099)
-    return ["317099"];
-  }
-};
-const requestParams = {
-  collections,
-  orientation: "landscape",
-  w: window.innerWidth,
-  h: window.innerHeight,
-  client_id: process.env.REACT_APP_UNSPLASH_CLIENT_ID
+const config = {
+  endpoints: {
+    random: "https://api.unsplash.com/photos/random?",
+    search: "https://unsplash.com/search"
+  },
+  localStorageKeys: {
+    nextPhoto: "ds_nextPhoto",
+    collections: "ds_collections"
+  },
+  // default to Unsplash Editorial collection (https://unsplash.com/collections/317099)
+  collections: ["317099"]
 };
 
 const App = () => {
   const initialPhoto = () =>
-    JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY.NEXT_PHOTO)) || {};
+    JSON.parse(window.localStorage.getItem(config.localStorageKeys.nextPhoto)) || {};
   const [photo, setPhoto] = useState(initialPhoto);
   const [loading, setLoading] = useState(false);
   const getPhoto = async () => {
     try {
       setLoading(true);
       NProgress.start();
+      const requestParams = {
+        collections:
+          window.localStorage.getItem(config.localStorageKeys.collections) || config.collections,
+        orientation: "landscape",
+        w: window.innerWidth * window.devicePixelRatio,
+        h: window.innerHeight * window.devicePixelRatio,
+        client_id: process.env.REACT_APP_UNSPLASH_CLIENT_ID
+      };
       const queryString = Object.keys(requestParams)
         .map(key => `${key}=${requestParams[key]}`)
         .join("&");
-      const photo = await fetchJSONData(`${ENDPOINTS.RANDOM}${queryString}`);
+      const photo = await fetchJSONData(`${config.endpoints.random}${queryString}`);
       const data = await fetchImageData(photo.urls.custom || photo.urls.full);
       setPhoto({
         id: photo.id,
@@ -74,7 +71,7 @@ const App = () => {
     })();
   }, []);
 
-  useEffect(() => localStorage.setItem(LOCAL_STORAGE_KEY.NEXT_PHOTO, JSON.stringify(photo)), [
+  useEffect(() => localStorage.setItem(config.localStorageKeys.nextPhoto, JSON.stringify(photo)), [
     photo
   ]);
 
@@ -107,7 +104,10 @@ const App = () => {
           {photo.location && (
             <div>
               {photo.location.name ? (
-                <a className="text-white f6" href={`${ENDPOINTS.SEARCH}/${photo.location.name}`}>
+                <a
+                  className="text-white f6"
+                  href={`${config.endpoints.random}/${photo.location.name}`}
+                >
                   {photo.location.title}
                 </a>
               ) : (
