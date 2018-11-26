@@ -22,3 +22,17 @@ body,
     opacity: 1;
   }
 }
+
+/* NProgress overrides */
+#nprogress .bar {
+  background: #fafbfc !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px #fafbfc, 0 0 5px #fafbfc;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: #fafbfc;
+  border-left-color: #fafbfc;
+}
