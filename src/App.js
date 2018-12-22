@@ -11,7 +11,8 @@ import "./App.css";
 
 const App = () => {
   const initialPhoto = () =>
-    JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEYS.NEXT_PHOTO)) || {};
+    JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEYS.NEXT_PHOTO)) ||
+    {};
   const [photo, setPhoto] = useState(initialPhoto);
   const [loading, setLoading] = useState(false);
   const getPhoto = async () => {
@@ -19,7 +20,9 @@ const App = () => {
       setLoading(true);
       NProgress.start();
       const requestParams = {
-        collections: window.localStorage.getItem(LOCAL_STORAGE_KEYS.COLLECTIONS) || COLLECTIONS,
+        collections:
+          window.localStorage.getItem(LOCAL_STORAGE_KEYS.COLLECTIONS) ||
+          COLLECTIONS,
         orientation: "landscape",
         w: window.innerWidth * window.devicePixelRatio,
         h: window.innerHeight * window.devicePixelRatio,
@@ -59,9 +62,14 @@ const App = () => {
     })();
   }, []);
 
-  useEffect(() => localStorage.setItem(LOCAL_STORAGE_KEYS.NEXT_PHOTO, JSON.stringify(photo)), [
-    photo
-  ]);
+  useEffect(
+    () =>
+      localStorage.setItem(
+        LOCAL_STORAGE_KEYS.NEXT_PHOTO,
+        JSON.stringify(photo)
+      ),
+    [photo]
+  );
 
   if (!photo) {
     return <div className="App" />;
@@ -92,7 +100,10 @@ const App = () => {
           {photo.location && (
             <div>
               {photo.location.name ? (
-                <a className="text-white f6" href={`${ENDPOINTS.SEARCH}/${photo.location.name}`}>
+                <a
+                  className="text-white f6"
+                  href={`${ENDPOINTS.SEARCH}/${photo.location.name}`}
+                >
                   {photo.location.title}
                 </a>
               ) : (
@@ -111,8 +122,12 @@ const App = () => {
               <Octicon icon={Sync} width={14} height={14} /> Refresh
             </button>
             {photo.links && (
-              <a className="btn btn-sm BtnGroup-item" href={photo.links.download}>
-                <Octicon icon={DesktopDownload} width={14} height={14} /> Download
+              <a
+                className="btn btn-sm BtnGroup-item"
+                href={photo.links.download}
+              >
+                <Octicon icon={DesktopDownload} width={14} height={14} />{" "}
+                Download
               </a>
             )}
           </div>
