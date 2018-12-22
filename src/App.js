@@ -1,28 +1,62 @@
 import React, { useState, useEffect } from "react";
-import NProgress from "nprogress";
-import Octicon, { Sync, DesktopDownload } from "@githubprimer/octicons-react";
+import styled, { createGlobalStyle } from "styled-components";
+import { normalize } from "polished";
+import fetch from "unfetch";
 
-import { ENDPOINTS, LOCAL_STORAGE_KEYS, COLLECTIONS } from "./consts";
-import { fetchJSONData, fetchImageData } from "./utils";
+const LOCAL_STORAGE_KEY = "ds_photo";
 
-import "../node_modules/primer/build/build.css";
-import "../node_modules/nprogress/nprogress.css";
-import "./App.css";
+const GlobalStyle = createGlobalStyle`
+  ${normalize()}
 
-const App = () => {
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      Helvetica, Arial, sans-serif,"Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol";
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+`;
+
+const Container = styled.div`
+  display: flex;
+  height: 100vh;
+  background-size: cover;
+  opacity: 0;
+  animation: fadeIn 1s both;
+`;
+
+const Controls = styled.div`
+  align-self: flex-end;
+  padding: 20px;
+`;
+
+const Location = styled.div`
+  color: white;
+  opacity: 0.8;
+  font-size: 14px;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  > a {
+    color: white;
+    text-decoration: none;
+  }
+`;
+
+export default () => {
   const initialPhoto = () =>
-    JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEYS.NEXT_PHOTO)) ||
-    {};
+    JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
   const [photo, setPhoto] = useState(initialPhoto);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const getPhoto = async () => {
     try {
-      setLoading(true);
-      NProgress.start();
       const requestParams = {
-        collections:
-          window.localStorage.getItem(LOCAL_STORAGE_KEYS.COLLECTIONS) ||
-          COLLECTIONS,
+        collections: ["317099"], // default to Unsplash Editorial collection (https://unsplash.com/collections/317099)
         orientation: "landscape",
         w: window.innerWidth * window.devicePixelRatio,
         h: window.innerHeight * window.devicePixelRatio,
@@ -31,28 +65,20 @@ const App = () => {
       const queryString = Object.keys(requestParams)
         .map(key => `${key}=${requestParams[key]}`)
         .join("&");
-      const photo = await fetchJSONData(`${ENDPOINTS.RANDOM}${queryString}`);
-      const data = await fetchImageData(photo.urls.custom || photo.urls.full);
+      const url = `https://api.unsplash.com/photos/random?${queryString}`;
+      setIsLoading(true);
+      const res = await fetch(url);
+      const json = await res.json();
       setPhoto({
-        id: photo.id,
-        links: photo.links,
-        location: photo.location,
-        user: photo.user,
-        data
+        id: json.id,
+        location: (json.location || {}).title,
+        link: json.links.html,
+        url: json.urls.custom
       });
-    } catch (e) {
-      console.error(`Error fetching photo: ${e}`);
-      setPhoto({
-        user: {
-          name: "Unable to load photo."
-        },
-        location: {
-          title: "Please try again or contact the developer."
-        }
-      });
+    } catch (err) {
+      console.error(`Error fetching photo: ${err.message}`);
     } finally {
-      setLoading(false);
-      NProgress.done();
+      setIsLoading(false);
     }
   };
 
@@ -63,78 +89,35 @@ const App = () => {
   }, []);
 
   useEffect(
-    () =>
-      localStorage.setItem(
-        LOCAL_STORAGE_KEYS.NEXT_PHOTO,
-        JSON.stringify(photo)
-      ),
+    () => {
+      window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(photo));
+      setIsLoading(false);
+    },
     [photo]
   );
 
-  if (!photo) {
-    return <div className="App" />;
+  if (!photo.id || isLoading) {
+    return null;
   }
 
   return (
-    <div
-      className="App d-flex flex-items-end"
-      style={{
-        backgroundImage: `linear-gradient(180deg, transparent 80%, rgba(0, 0, 0, 0.3)), url(${
-          photo.data
-        })`
-      }}
-    >
-      <div className="d-flex flex-auto flex-justify-between flex-items-center p-3">
-        <div className="d-flex flex-column">
-          {photo.user && (
-            <div>
-              {photo.user.links ? (
-                <a className="text-white" href={photo.user.links.html}>
-                  {photo.user.name}
-                </a>
-              ) : (
-                <span className="text-white">{photo.user.name}</span>
-              )}
-            </div>
-          )}
+    <>
+      <GlobalStyle />
+      <Container
+        style={{
+          backgroundImage: `linear-gradient(180deg, transparent 80%, rgba(0, 0, 0, 0.3)), url(${
+            photo.url
+          })`
+        }}
+      >
+        <Controls>
           {photo.location && (
-            <div>
-              {photo.location.name ? (
-                <a
-                  className="text-white f6"
-                  href={`${ENDPOINTS.SEARCH}/${photo.location.name}`}
-                >
-                  {photo.location.title}
-                </a>
-              ) : (
-                <span className="text-white f6">{photo.location.title}</span>
-              )}
-            </div>
+            <Location>
+              <a href={photo.link}>{photo.location}</a>
+            </Location>
           )}
-        </div>
-        <div>
-          <div className="BtnGroup">
-            <button
-              className="btn btn-sm BtnGroup-item"
-              onClick={async () => await getPhoto()}
-              disabled={loading}
-            >
-              <Octicon icon={Sync} width={14} height={14} /> Refresh
-            </button>
-            {photo.links && (
-              <a
-                className="btn btn-sm BtnGroup-item"
-                href={photo.links.download}
-              >
-                <Octicon icon={DesktopDownload} width={14} height={14} />{" "}
-                Download
-              </a>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
+        </Controls>
+      </Container>
+    </>
   );
 };
-
-export default App;
