@@ -29,21 +29,26 @@ const Container = styled.div`
 const Controls = styled.div`
   align-self: flex-end;
   padding: 20px;
+  color: white;
+  line-height: 1.5;
+
+  a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.8;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
 `;
 
 const Location = styled.div`
-  color: white;
-  opacity: 0.8;
-  font-size: 14px;
+  font-size: 15px;
+`;
 
-  &:hover {
-    opacity: 1;
-  }
-
-  > a {
-    color: white;
-    text-decoration: none;
-  }
+const User = styled.div`
+  font-size: 13px;
 `;
 
 export default () => {
@@ -73,7 +78,8 @@ export default () => {
         id: json.id,
         location: (json.location || {}).title,
         link: json.links.html,
-        url: json.urls.custom
+        url: json.urls.custom,
+        user: json.user.name
       });
     } catch (err) {
       console.error(`Error fetching photo: ${err.message}`);
@@ -113,9 +119,14 @@ export default () => {
         <Controls>
           {photo.location && (
             <Location>
-              <a href={photo.link}>{photo.location}</a>
+              <a href={`https://unsplash.com/search/${photo.location}`}>
+                {photo.location}
+              </a>
             </Location>
           )}
+          <User>
+            <a href={photo.link}>Photo by {photo.user}</a>
+          </User>
         </Controls>
       </Container>
     </>
