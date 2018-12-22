@@ -3,8 +3,6 @@ import styled, { createGlobalStyle } from "styled-components";
 import { normalize } from "polished";
 import fetch from "unfetch";
 
-const LOCAL_STORAGE_KEY = "ds_photo";
-
 const GlobalStyle = createGlobalStyle`
   ${normalize()}
 
@@ -49,6 +47,8 @@ const Location = styled.div`
 `;
 
 export default () => {
+  const isoDate = new Date().toISOString().slice(0, 10);
+  const LOCAL_STORAGE_KEY = `ds_photo-${isoDate}`;
   const initialPhoto = () =>
     JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
   const [photo, setPhoto] = useState(initialPhoto);
