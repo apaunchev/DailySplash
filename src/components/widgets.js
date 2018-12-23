@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import Clock from "./widgets/clock";
 import PhotoInfo from "./widgets/photo-info";
-import Menu from "./widgets/menu";
 
 const Widgets = styled.div`
   z-index: 3;
@@ -37,7 +36,6 @@ export default ({ photo }) => (
     </Middle>
     <Bottom>
       <PhotoInfo author={photo.author} location={photo.location} />
-      <Menu />
     </Bottom>
   </Widgets>
 );
