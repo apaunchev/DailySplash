@@ -55,10 +55,8 @@ export default () => {
         color: json.color,
         link: json.links.html,
         src: `${json.urls.raw}?${getQueryString(photoParams)}`,
-        location: {
-          name: json.location.name,
-          title: json.location.title
-        },
+        download: json.urls.full,
+        location: json.location.title,
         author: {
           name: json.user.name,
           link: json.user.links.html
@@ -93,7 +91,7 @@ export default () => {
       <GlobalStyle />
       <>
         <Background color={photo.color} src={photo.src} />
-        <Widgets photo={photo} />
+        <Widgets photo={photo} onRefresh={async () => await getPhoto()} />
       </>
     </>
   );

@@ -33,8 +33,8 @@ export default ({ author, location }) => (
     )}
     {location && (
       <Location>
-        <a href={`https://unsplash.com/search/photos/${location.name}`}>
-          {location.title}
+        <a href={`https://unsplash.com/search/photos/${location}`}>
+          {location}
         </a>
       </Location>
     )}
