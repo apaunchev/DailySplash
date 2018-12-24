@@ -56,7 +56,7 @@ export default () => {
         link: json.links.html,
         src: `${json.urls.raw}?${getQueryString(photoParams)}`,
         download: json.urls.full,
-        location: json.location.title,
+        location: (json.location || {}).title,
         author: {
           name: json.user.name,
           link: json.user.links.html
