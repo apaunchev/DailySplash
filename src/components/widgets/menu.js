@@ -96,7 +96,7 @@ const PopoverButtonIcon = styled.span`
   margin-right: 8px;
 `;
 
-export default ({ photo, onRefresh }) => {
+export default ({ download, link, onRefresh }) => {
   const [isPopoverVisible, setIsPopoverVisible] = useState(false);
 
   return (
@@ -112,13 +112,13 @@ export default ({ photo, onRefresh }) => {
             </PopoverButtonIcon>{" "}
             Refresh
           </PopoverButton>
-          <PopoverButtonLink href={photo.download} download>
+          <PopoverButtonLink href={download} download>
             <PopoverButtonIcon>
               <Download size="16" />
             </PopoverButtonIcon>{" "}
             Download
           </PopoverButtonLink>
-          <PopoverButtonLink href={photo.link}>
+          <PopoverButtonLink href={link}>
             <PopoverButtonIcon>
               <ExternalLink size="16" />
             </PopoverButtonIcon>{" "}

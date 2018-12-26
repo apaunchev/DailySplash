@@ -37,7 +37,7 @@ export default ({ photo, onRefresh }) => (
     </Middle>
     <Bottom>
       <PhotoInfo author={photo.author} location={photo.location} />
-      <Menu photo={photo} onRefresh={onRefresh} />
+      <Menu download={photo.download} link={photo.link} onRefresh={onRefresh} />
     </Bottom>
   </Widgets>
 );
