@@ -5,7 +5,6 @@ import PhotoInfo from "./widgets/photo-info";
 import Menu from "./widgets/menu";
 
 const Widgets = styled.div`
-  z-index: 2;
   position: absolute;
   top: 0;
   right: 0;

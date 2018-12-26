@@ -8,4 +8,3 @@ Daily Splash is an attempt to recreate products such as [Momentum](https://momen
 * [styled-components](https://www.styled-components.com/)
 * [polished](https://polished.js.org/)
 * [react-feather](https://github.com/carmelopullara/react-feather)
-* [react-preload-image](https://github.com/sconstantinides/react-preload-image)

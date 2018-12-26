@@ -1,5 +1,5 @@
 import fetch from "unfetch";
-import React, { useState, useEffect } from "react";
+import React, { Component } from "react";
 import { createGlobalStyle } from "styled-components";
 import { normalize } from "polished";
 import Background from "./background";
@@ -25,32 +25,34 @@ const getQueryString = params =>
     .map(key => `${key}=${params[key]}`)
     .join("&");
 
-export default () => {
-  const isoDate = new Date().toISOString().slice(0, 10);
-  const LOCAL_STORAGE_KEY = `ds_photo-${isoDate}`;
-  const initialPhoto = () =>
-    JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
-  const [photo, setPhoto] = useState(initialPhoto);
-  const [isLoading, setIsLoading] = useState(false);
+const isoDate = new Date().toISOString().slice(0, 10);
+const LOCAL_STORAGE_KEY = `ds_photo-${isoDate}`;
 
-  const getPhoto = async () => {
+export default class App extends Component {
+  state = {
+    photo: JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)) || {},
+    loading: true
+  };
+
+  async componentDidMount() {
+    if (!this.state.photo.id) await this.getPhoto();
+  }
+
+  getPhoto = async () => {
     try {
       const requestParams = {
-        // default to Unsplash Editorial collection (https://unsplash.com/collections/317099)
-        collections: ["317099"],
+        collections: ["317099"], // (https://unsplash.com/collections/317099)
         orientation: "landscape",
         client_id: process.env.REACT_APP_UNSPLASH_CLIENT_ID
       };
       const photoParams = { w: 1440, dpr: window.devicePixelRatio, fit: "max" };
-
-      setIsLoading(true);
       const res = await fetch(
         `https://api.unsplash.com/photos/random?${getQueryString(
           requestParams
         )}`
       );
       const json = await res.json();
-      setPhoto({
+      const photo = {
         id: json.id,
         color: json.color,
         link: json.links.html,
@@ -61,38 +63,36 @@ export default () => {
           name: json.user.name,
           link: json.user.links.html
         }
-      });
+      };
+
+      this.setState({ photo }, () =>
+        window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(photo))
+      );
     } catch (err) {
       console.error(`Error fetching photo: ${err.message}`);
-    } finally {
-      setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    (async () => {
-      if (!initialPhoto().id) await getPhoto();
-    })();
-  }, []);
+  handleRefresh = async () => {
+    this.setState({ loading: true });
+    await this.getPhoto();
+  };
 
-  useEffect(
-    () => {
-      window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(photo));
-    },
-    [photo]
-  );
+  handleImageLoaded = () => {
+    this.setState({ loading: false });
+  };
 
-  if (!photo.id || isLoading) {
-    return null;
-  }
+  render() {
+    const { photo, loading } = this.state;
 
-  return (
-    <>
-      <GlobalStyle />
+    return (
       <>
-        <Background color={photo.color} src={photo.src} />
-        <Widgets photo={photo} onRefresh={async () => await getPhoto()} />
+        <GlobalStyle />
+        <>
+          <Background photo={photo} onImageLoaded={this.handleImageLoaded} />
+          {!loading && <Widgets photo={photo} onRefresh={this.handleRefresh} />}
+        </>
       </>
-    </>
-  );
-};
+    );
+  }
+}
