@@ -1,17 +1,18 @@
 import React from "react";
 import styled from "styled-components";
+import { darken } from "polished";
 
 const StyledPhotoInfo = styled.div`
-  color: white;
+  color: #fff;
   line-height: 1.5;
 
   a {
-    color: white;
-    opacity: 0.8;
+    color: ${darken(0.2, "#fff")};
     text-decoration: none;
+    transition: all 0.2s ease-in-out;
 
     &:hover {
-      opacity: 1;
+      color: #fff;
     }
   }
 `;
