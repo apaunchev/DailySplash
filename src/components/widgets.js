@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Clock from "./widgets/clock";
 import PhotoInfo from "./widgets/photo-info";
-import Menu from "./widgets/menu";
+import Button, { ButtonLink } from "./button";
+import { RefreshCw, Download } from "react-feather";
 
 const Container = styled.div`
   position: absolute;
@@ -20,8 +21,6 @@ const Container = styled.div`
 
 const Top = styled.div``;
 
-const Middle = styled.div``;
-
 const Bottom = styled.div`
   position: relative;
   display: flex;
@@ -31,13 +30,19 @@ const Bottom = styled.div`
 
 const Widgets = ({ photo, onRefresh }) => (
   <Container>
-    <Top />
-    <Middle>
+    <Top>
       <Clock />
-    </Middle>
+    </Top>
     <Bottom>
       <PhotoInfo author={photo.author} location={photo.location} />
-      <Menu download={photo.download} link={photo.link} onRefresh={onRefresh} />
+      <div>
+        <Button onClick={onRefresh}>
+          <RefreshCw size={14} /> Refresh
+        </Button>
+        <ButtonLink href={photo.download}>
+          <Download size={14} /> Download
+        </ButtonLink>
+      </div>
     </Bottom>
   </Container>
 );

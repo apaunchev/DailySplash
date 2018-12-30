@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import useInterval from "../../hooks/useInterval";
 
-const Container = styled.div`
-  color: white;
-  font-size: 10rem;
-  font-weight: 500;
+const StyledClock = styled.div`
+  display: inline-flex;
+  align-items: center;
+  color: #fff;
+  font-size: 24px;
   line-height: 1;
-  text-align: center;
+  font-weight: 500;
 `;
 
 const Clock = () => {
@@ -16,13 +17,13 @@ const Clock = () => {
   useInterval(() => setDate(new Date()), 1000);
 
   return (
-    <Container>
+    <StyledClock>
       {date.toLocaleTimeString(navigator.language, {
         hour: "2-digit",
         minute: "2-digit",
         hour12: false
       })}
-    </Container>
+    </StyledClock>
   );
 };
 
