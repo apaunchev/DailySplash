@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const PhotoInfo = styled.div`
+const Container = styled.div`
   color: white;
   line-height: 1.5;
 
@@ -24,8 +24,8 @@ const Location = styled.div`
   font-size: 14px;
 `;
 
-export default ({ author, location }) => (
-  <PhotoInfo>
+const PhotoInfo = ({ author, location }) => (
+  <Container>
     {author && (
       <Author>
         <a href={author.link}>{author.name}</a>
@@ -38,5 +38,7 @@ export default ({ author, location }) => (
         </a>
       </Location>
     )}
-  </PhotoInfo>
+  </Container>
 );
+
+export default PhotoInfo;

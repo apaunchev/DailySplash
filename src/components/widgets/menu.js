@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Menu, RefreshCw, Download, ExternalLink } from "react-feather";
+import {
+  Menu as MenuIcon,
+  RefreshCw,
+  Download,
+  ExternalLink
+} from "react-feather";
 
 const MenuButton = styled.button`
   background: transparent;
@@ -96,13 +101,13 @@ const PopoverButtonIcon = styled.span`
   margin-right: 8px;
 `;
 
-export default ({ download, link, onRefresh }) => {
+const Menu = ({ download, link, onRefresh }) => {
   const [isPopoverVisible, setIsPopoverVisible] = useState(false);
 
   return (
     <>
       <MenuButton onClick={() => setIsPopoverVisible(!isPopoverVisible)}>
-        <Menu />
+        <MenuIcon />
       </MenuButton>
       <Popover className={isPopoverVisible ? "isVisible" : null}>
         <PopoverSection>
@@ -129,3 +134,5 @@ export default ({ download, link, onRefresh }) => {
     </>
   );
 };
+
+export default Menu;

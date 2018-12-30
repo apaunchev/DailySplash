@@ -4,7 +4,7 @@ import Clock from "./widgets/clock";
 import PhotoInfo from "./widgets/photo-info";
 import Menu from "./widgets/menu";
 
-const Widgets = styled.div`
+const Container = styled.div`
   position: absolute;
   top: 0;
   right: 0;
@@ -29,8 +29,8 @@ const Bottom = styled.div`
   align-items: center;
 `;
 
-export default ({ photo, onRefresh }) => (
-  <Widgets>
+const Widgets = ({ photo, onRefresh }) => (
+  <Container>
     <Top />
     <Middle>
       <Clock />
@@ -39,5 +39,7 @@ export default ({ photo, onRefresh }) => (
       <PhotoInfo author={photo.author} location={photo.location} />
       <Menu download={photo.download} link={photo.link} onRefresh={onRefresh} />
     </Bottom>
-  </Widgets>
+  </Container>
 );
+
+export default Widgets;
