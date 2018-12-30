@@ -16,21 +16,22 @@ const Container = styled.div`
   justify-content: space-between;
   padding: 20px;
   box-shadow: 0 0 200px rgba(0, 0, 0, 0.3) inset;
-  text-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
 `;
 
-const Top = styled.div``;
-
-const Bottom = styled.div`
-  position: relative;
+const Top = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+`;
+
+const Bottom = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 const Widgets = ({ photo, onRefresh }) => (
   <Container>
     <Top>
+      <div />
       <Clock />
     </Top>
     <Bottom>
