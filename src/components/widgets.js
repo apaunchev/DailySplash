@@ -23,6 +23,11 @@ const Top = styled.div`
   justify-content: space-between;
 `;
 
+const Middle = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
@@ -30,10 +35,12 @@ const Bottom = styled.div`
 
 const Widgets = ({ photo, onRefresh }) => (
   <Container>
-    <Top>
+    <Top />
+    <Middle>
       <div />
       <Clock />
-    </Top>
+      <div />
+    </Middle>
     <Bottom>
       <PhotoInfo author={photo.author} location={photo.location} />
       <div>
