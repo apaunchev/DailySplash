@@ -21,16 +21,19 @@ const Container = styled.div`
 const Top = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const Middle = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const Widgets = ({ photo, onRefresh }) => (
