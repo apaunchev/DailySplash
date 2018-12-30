@@ -45,7 +45,13 @@ export default class App extends Component {
         orientation: "landscape",
         client_id: process.env.REACT_APP_UNSPLASH_CLIENT_ID
       };
-      const photoParams = { w: 1440, dpr: window.devicePixelRatio, fit: "max" };
+      const photoParams = {
+        w: 1440,
+        dpr: window.devicePixelRatio,
+        fit: "max",
+        auto: "format",
+        q: 80
+      };
       const res = await fetch(
         `https://api.unsplash.com/photos/random?${getQueryString(
           requestParams
@@ -56,7 +62,7 @@ export default class App extends Component {
         id: json.id,
         color: json.color,
         link: json.links.html,
-        src: `${json.urls.raw}?${getQueryString(photoParams)}`,
+        src: `${json.urls.raw}&${getQueryString(photoParams)}`,
         download: json.urls.full,
         location: (json.location || {}).title,
         author: {
