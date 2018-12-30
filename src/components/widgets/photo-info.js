@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Container = styled.div`
+const StyledPhotoInfo = styled.div`
   color: white;
   line-height: 1.5;
 
@@ -25,7 +25,7 @@ const Location = styled.div`
 `;
 
 const PhotoInfo = ({ author, location }) => (
-  <Container>
+  <StyledPhotoInfo>
     {author && (
       <Author>
         <a href={author.link}>{author.name}</a>
@@ -38,7 +38,7 @@ const PhotoInfo = ({ author, location }) => (
         </a>
       </Location>
     )}
-  </Container>
+  </StyledPhotoInfo>
 );
 
 export default PhotoInfo;
