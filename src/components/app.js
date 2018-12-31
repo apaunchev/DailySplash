@@ -46,11 +46,9 @@ export default class App extends Component {
         client_id: process.env.REACT_APP_UNSPLASH_CLIENT_ID
       };
       const photoParams = {
-        w: 1440,
+        w: 1920,
         dpr: window.devicePixelRatio,
-        fit: "max",
-        auto: "format",
-        q: 80
+        fit: "max"
       };
       const res = await fetch(
         `https://api.unsplash.com/photos/random?${getQueryString(
