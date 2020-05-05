@@ -8,6 +8,7 @@ const StyledClock = styled.div`
   font-weight: 500;
   line-height: 1;
   text-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+  user-select: none;
 `;
 
 const Clock = () => {
