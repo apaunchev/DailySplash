@@ -20,9 +20,9 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const getQueryString = params =>
+const getQueryString = (params) =>
   Object.keys(params)
-    .map(key => `${key}=${params[key]}`)
+    .map((key) => `${key}=${params[key]}`)
     .join("&");
 
 const isoDate = new Date().toISOString().slice(0, 10);
@@ -31,7 +31,7 @@ const LOCAL_STORAGE_KEY = `ds_photo-${isoDate}`;
 export default class App extends Component {
   state = {
     photo: JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY)) || {},
-    loading: true
+    loading: true,
   };
 
   async componentDidMount() {
@@ -43,12 +43,12 @@ export default class App extends Component {
       const requestParams = {
         collections: ["317099"], // (https://unsplash.com/collections/317099)
         orientation: "landscape",
-        client_id: process.env.REACT_APP_UNSPLASH_CLIENT_ID
+        client_id: process.env.REACT_APP_UNSPLASH_CLIENT_ID,
       };
       const photoParams = {
         w: 1920,
         dpr: window.devicePixelRatio,
-        fit: "max"
+        fit: "max",
       };
       const res = await fetch(
         `https://api.unsplash.com/photos/random?${getQueryString(
@@ -65,8 +65,8 @@ export default class App extends Component {
         location: (json.location || {}).title,
         author: {
           name: json.user.name,
-          link: json.user.links.html
-        }
+          link: json.user.links.html,
+        },
       };
 
       this.setState({ photo }, () =>

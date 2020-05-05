@@ -4,7 +4,7 @@ import backgroundLoader from "./backgroundLoader.svg";
 export default class Background extends Component {
   state = {
     loaded: false,
-    src: null
+    src: null,
   };
 
   componentDidMount() {
@@ -28,7 +28,7 @@ export default class Background extends Component {
     this.preloader.onload = () => {
       this.setState({
         src: `url(${photo.src})`,
-        loaded: true
+        loaded: true,
       });
 
       onImageLoaded();
@@ -49,7 +49,7 @@ export default class Background extends Component {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: this.props.photo.color
+          backgroundColor: this.props.photo.color,
         }}
       >
         {!this.state.loaded && (
@@ -67,7 +67,7 @@ export default class Background extends Component {
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
             transition: "opacity 300ms cubic-bezier(0.215, 0.61, 0.355, 1)",
-            opacity: this.state.loaded ? 1 : 0
+            opacity: this.state.loaded ? 1 : 0,
           }}
         />
       </div>
