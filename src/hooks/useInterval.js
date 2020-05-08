@@ -9,7 +9,7 @@ const useInterval = (callback, interval = 1000) => {
     return () => {
       clearInterval(id);
     };
-  }, []);
+  }, [callback, interval]);
 };
 
 export default useInterval;

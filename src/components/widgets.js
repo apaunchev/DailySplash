@@ -1,9 +1,9 @@
 import React from "react";
+import { Download, RefreshCw } from "react-feather";
 import styled from "styled-components";
+import Button, { ButtonLink } from "./button";
 import Clock from "./widgets/clock";
 import PhotoInfo from "./widgets/photo-info";
-import Button, { ButtonLink } from "./button";
-import { RefreshCw, Download } from "react-feather";
 
 const Container = styled.div`
   position: absolute;
