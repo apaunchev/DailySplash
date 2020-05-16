@@ -1,6 +1,6 @@
 {
   "name": "daily-splash",
-  "version": "0.5.5",
+  "version": "0.6.0",
   "private": true,
   "dependencies": {
     "normalize.css": "^8.0.1",
