@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import fetch from "unfetch";
 import { useStickyState } from "../hooks/useStickyState";
 import { getQueryString } from "../utils";
@@ -8,6 +8,7 @@ import Widgets from "./widgets";
 const LOCAL_STORAGE_KEY = `ds_photo`;
 const Page = () => {
   const [photo, setPhoto] = useStickyState("", LOCAL_STORAGE_KEY);
+  const [loading, setLoading] = useState(true);
 
   const loadPhoto = useCallback(async () => {
     try {
@@ -33,28 +34,36 @@ const Page = () => {
         color: json.color,
         link: json.links.html,
         src: `${json.urls.raw}&${getQueryString(photoParams)}`,
-        download: json.urls.full,
-        location: (json.location || {}).title,
+        download: json.links.download,
         author: {
           name: json.user.name,
-          link: json.user.links.html,
+          photo: json.user.profile_image.small,
         },
       });
-    } catch (err) {
-      console.error(`Error fetching photo: ${err.message}`);
+    } catch (error) {
+      console.error(`Error fetching photo: ${error.message}`);
     }
   }, [setPhoto]);
 
+  const handleRefresh = useCallback(() => {
+    setLoading(true);
+    loadPhoto();
+  }, [loadPhoto]);
+
+  const handleImageLoaded = useCallback(() => {
+    setLoading(false);
+  }, [setLoading]);
+
   useEffect(() => {
     if (!photo.id) {
-      loadPhoto();
+      handleRefresh();
     }
-  }, [photo, loadPhoto]);
+  }, [photo.id, handleRefresh]);
 
   return (
     <>
-      <Background photo={photo} />
-      <Widgets photo={photo} onRefresh={() => loadPhoto()} />
+      <Background photo={photo} onImageLoaded={handleImageLoaded} />
+      {!loading && <Widgets photo={photo} onRefresh={handleRefresh} />}
     </>
   );
 };

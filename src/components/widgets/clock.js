@@ -4,11 +4,15 @@ import useInterval from "../../hooks/useInterval";
 
 const StyledClock = styled.div`
   color: #fff;
-  font-size: 160px;
+  font-size: 7.5rem;
   font-weight: 500;
   line-height: 1;
   text-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
   user-select: none;
+
+  @media (min-width: 768px) {
+    font-size: 10rem;
+  }
 `;
 
 const Clock = () => {

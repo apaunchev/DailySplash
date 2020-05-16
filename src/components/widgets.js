@@ -14,8 +14,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 20px;
-  box-shadow: 0 0 200px rgba(0, 0, 0, 0.3) inset;
+  padding: 1.5rem;
+  box-shadow: 0 0 200px rgba(0, 0, 0, 0.5) inset;
 `;
 
 const Top = styled.div`
@@ -45,13 +45,13 @@ const Widgets = ({ photo, onRefresh }) => (
       <div />
     </Middle>
     <Bottom>
-      <PhotoInfo author={photo.author} location={photo.location} />
+      <PhotoInfo photo={photo} />
       <div>
         <Button onClick={onRefresh}>
-          <RefreshCw size={14} /> Refresh
+          <RefreshCw size={16} /> Refresh
         </Button>
         <ButtonLink href={photo.download}>
-          <Download size={14} /> Download
+          <Download size={16} /> Download
         </ButtonLink>
       </div>
     </Bottom>

@@ -1,45 +1,31 @@
 import React from "react";
 import styled from "styled-components";
-import { darken } from "polished";
 
-const StyledPhotoInfo = styled.div`
-  color: #fff;
-  line-height: 1.5;
-
+const Author = styled.div`
   a {
-    color: ${darken(0.2, "#fff")};
-    text-decoration: none;
-    transition: all 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+  }
 
-    &:hover {
-      color: #fff;
-    }
+  img {
+    margin-right: 0.5rem;
+    border-radius: 100%;
   }
 `;
 
-const Author = styled.div`
-  font-size: 16px;
-`;
+const PhotoInfo = ({ photo: { author, link } }) => {
+  if (!author) {
+    return null;
+  }
 
-const Location = styled.div`
-  font-size: 14px;
-`;
-
-const PhotoInfo = ({ author, location }) => (
-  <StyledPhotoInfo>
-    {author && (
-      <Author>
-        <a href={author.link}>{author.name}</a>
-      </Author>
-    )}
-    {location && (
-      <Location>
-        <a href={`https://unsplash.com/search/photos/${location}`}>
-          {location}
-        </a>
-      </Location>
-    )}
-  </StyledPhotoInfo>
-);
+  return (
+    <Author>
+      <a href={link}>
+        <img src={author.photo} alt={author.name} />
+        {author.name}
+      </a>
+    </Author>
+  );
+};
 
 export default PhotoInfo;
