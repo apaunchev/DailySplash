@@ -41,7 +41,7 @@ const Page = () => {
         },
       });
     } catch (error) {
-      console.error(`Error fetching photo: ${error.message}`);
+      console.error(`Error fetching photo: ${error}`);
     }
   }, [setPhoto]);
 

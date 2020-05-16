@@ -38,20 +38,21 @@ function Background({ photo, onImageLoaded }) {
   const [src, setSrc] = useState(null);
 
   useEffect(() => {
-    const fetchImage = async () => {
+    const fetchImage = async (photo = {}) => {
       try {
+        if (!photo.src) return;
         setLoaded(false);
         await preloadImage(photo.src);
         setSrc(`url(${photo.src})`);
         setLoaded(true);
         onImageLoaded();
       } catch (error) {
-        console.error(`Error fetching image: ${error.message}`);
+        console.error(`Error fetching image: ${error}`);
       }
     };
 
-    fetchImage();
-  }, [photo.src, onImageLoaded]);
+    fetchImage(photo);
+  }, [photo, onImageLoaded]);
 
   return (
     <Container color={photo.color}>
