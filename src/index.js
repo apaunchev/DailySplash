@@ -1,12 +1,10 @@
-import { normalize } from "polished";
+import "normalize.css/normalize.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import { createGlobalStyle } from "styled-components";
 import Page from "./components/page";
 
 const GlobalStyle = createGlobalStyle`
-  ${normalize()}
-
   html, body, #root {
     height: 100%;
   }

@@ -4,7 +4,6 @@ Daily Splash is an attempt to recreate products such as [Momentum](https://momen
 
 ## Technologies
 
-* [React](https://reactjs.org/) (+ [Hooks](https://reactjs.org/docs/hooks-intro.html))
-* [styled-components](https://www.styled-components.com/)
-* [polished](https://polished.js.org/)
-* [react-feather](https://github.com/carmelopullara/react-feather)
+- [React](https://reactjs.org/) (+ [Hooks](https://reactjs.org/docs/hooks-intro.html))
+- [styled-components](https://www.styled-components.com/)
+- [react-feather](https://github.com/carmelopullara/react-feather)

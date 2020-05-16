@@ -3,7 +3,7 @@
   "version": "0.5.5",
   "private": true,
   "dependencies": {
-    "polished": "^3.6.2",
+    "normalize.css": "^8.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-feather": "^2.0.8",
