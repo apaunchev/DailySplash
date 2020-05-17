@@ -1,5 +1,6 @@
 {
   "name": "Daily Splash",
+  "description": "Personalize your New Tab page with beautiful photos and customizable widgets.",
   "version": "0.6.0",
   "manifest_version": 2,
   "icons": {
